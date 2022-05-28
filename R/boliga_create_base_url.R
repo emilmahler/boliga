@@ -19,7 +19,8 @@
 boliga_create_base_url <- function(min_sale_date = NULL,
                                    max_sale_date = Sys.Date(),
                                    type = c("Alle", "Villa", "Rækkehus", "Ejerlejlighed", "Fritidshus", "Landejendom"),
-                                   postal_code = NULL){
+                                   zipcodeFrom = NULL,
+                                   zipcodeTo = NULL){
   
   
   base_url <- "http://www.boliga.dk/salg/resultater?so=1"
@@ -71,10 +72,18 @@ boliga_create_base_url <- function(min_sale_date = NULL,
     stop("type cannot be null.", call. = FALSE)
   }
   
-  if(!is.null(postal_code)){
-    postal_code <- paste0("&iPostnr=", postal_code)
+  if(!is.null(zipcodeFrom)){
+    zipcodeFrom <- paste0("&zipcodeFrom=", zipcodeFrom)
     
-    base_url <- paste0(base_url, postal_code)
+    base_url <- paste0(base_url, zipcodeFrom)
+  } else {
+    stop("zipcodeFrom cannot be null.")
+  }
+  
+  if(!is.null(zipcodeTo)){
+    zipcodeTo <- paste0("&zipcodeTo=", zipcodeTo)
+    
+    base_url <- paste0(base_url, zipcodeTo)
   } else {
     stop("post_no cannot be null.")
   }
